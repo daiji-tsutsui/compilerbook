@@ -1,13 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include "./print.h"
 
 void error(char *fmt, ...);
-void print_prefix();
-void print_first_term(char** p);
-void print_add_term(char** p);
-void print_sub_term(char** p);
-void print_return();
 
 int main(int argc, char **argv) {
     if (argc != 2) {
@@ -45,26 +41,4 @@ void error(char *fmt, ...) {
     vfprintf(stderr, fmt, ap);
     fprintf(stderr, "\n");
     exit(1);
-}
-
-void print_prefix() {
-    printf(".intel_syntax noprefix\n");
-    printf(".globl main\n");
-    printf("main:\n");
-}
-
-void print_first_term(char** p) {
-    printf("  mov rax, %ld\n", strtol(*p, &*p, 10));
-}
-
-void print_add_term(char** p) {
-    printf("  add rax, %ld\n", strtol(*p, &*p, 10));
-}
-
-void print_sub_term(char** p) {
-    printf("  sub rax, %ld\n", strtol(*p, &*p, 10));
-}
-
-void print_return() {
-    printf("  ret\n");
 }
