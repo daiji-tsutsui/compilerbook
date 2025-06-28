@@ -44,6 +44,7 @@ Token tokenize(char *p) {
         if (is_operator(*p)) {
             current = new_token(TK_OPERATOR, current, p);
             p++;
+            continue;
         }
 
         if (isdigit(*p)) {

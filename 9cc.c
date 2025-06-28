@@ -4,9 +4,10 @@
 #include "lib/print.h"
 #include "lib/token.h"
 
-bool DEBUG = true;
+bool DEBUG = false;
 
 int get_number(Token* token);
+bool consume(Token* token, char op);
 bool at_eof(Token token);
 void print_debug(Token token);
 
@@ -24,7 +25,20 @@ int main(int argc, char **argv) {
         if (DEBUG) {
             print_debug(token);
             token = *token.next;
+            continue;
         }
+
+        if (consume(&token, '+')) {
+            print_add_term(get_number(&token));
+            continue;
+        }
+
+        if (consume(&token, '-')) {
+            print_sub_term(get_number(&token));
+            continue;
+        }
+
+        error("Unexpected token: %c", token.str);
     }
 
     print_return();
@@ -37,6 +51,13 @@ int get_number(Token* token) {
     int val = token->val;
     *token = *token->next;
     return val;
+}
+
+bool consume(Token* token, char op) {
+    if (token->kind != TK_OPERATOR || *token->str != op) return false;
+
+    *token = *token->next;
+    return true;
 }
 
 bool at_eof(Token token) {
