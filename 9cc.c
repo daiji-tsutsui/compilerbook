@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "./print.h"
-#include "./token.h"
+#include "lib/print.h"
+#include "lib/token.h"
 
 int expect_number(Token* token);
 
