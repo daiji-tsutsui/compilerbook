@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
+void error(char *fmt, ...);
 void print_prefix();
 void print_first_term(char** p);
 void print_add_term(char** p);
@@ -9,8 +11,7 @@ void print_return();
 
 int main(int argc, char **argv) {
     if (argc != 2) {
-        fprintf(stderr, "引数の個数が正しくありません\n");
-        return 1;
+        error("引数の個数が正しくありません");
     }
 
     char* p = argv[1];
@@ -31,12 +32,19 @@ int main(int argc, char **argv) {
             continue;
         }
 
-        fprintf(stderr, "Unexpected character!!: '%c'\n", *p);
-        return 1;
+        error("Unexpected character!!: '%c'", *p);
     }
 
     print_return();
     return 0;
+}
+
+void error(char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    fprintf(stderr, "\n");
+    exit(1);
 }
 
 void print_prefix() {
