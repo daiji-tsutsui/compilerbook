@@ -7,8 +7,8 @@ void print_prefix() {
     printf("main:\n");
 }
 
-void print_first_term(char** p) {
-    printf("  mov rax, %ld\n", strtol(*p, &*p, 10));
+void print_first_term(int num) {
+    printf("  mov rax, %d\n", num);
 }
 
 void print_add_term(char** p) {
