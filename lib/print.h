@@ -11,12 +11,12 @@ void print_first_term(int num) {
     printf("  mov rax, %d\n", num);
 }
 
-void print_add_term(char** p) {
-    printf("  add rax, %ld\n", strtol(*p, &*p, 10));
+void print_add_term(int num) {
+    printf("  add rax, %d\n", num);
 }
 
-void print_sub_term(char** p) {
-    printf("  sub rax, %ld\n", strtol(*p, &*p, 10));
+void print_sub_term(int num) {
+    printf("  sub rax, %d\n", num);
 }
 
 void print_return() {

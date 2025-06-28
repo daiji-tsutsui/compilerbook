@@ -29,10 +29,10 @@ Token *new_token(TokenKind kind, Token *parent, char *str) {
     return t;
 }
 
-Token *tokenize(char *p) {
+Token tokenize(char *p) {
     Token head;
     head.next = NULL;
-    Token *current = &head;
+    Token* current = &head;
 
     while (*p) {
         // skip spaces
@@ -55,7 +55,8 @@ Token *tokenize(char *p) {
         error("トークナイズできません");
     }
 
-    return head.next;
+    new_token(TK_EOF, current, p);
+    return *head.next;
 }
 
 bool is_operator(char c) {
