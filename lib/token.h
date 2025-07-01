@@ -29,7 +29,7 @@ Token* new_token(TokenKind kind, Token* parent, char* str) {
     return t;
 }
 
-Token* tokenize(char *p) {
+Token* tokenize(char* p) {
     Token head;
     head.next = NULL;
     Token* current = &head;
@@ -53,7 +53,7 @@ Token* tokenize(char *p) {
             continue;
         }
 
-        error("トークナイズできません");
+        error_at(p, "Cannot tokenize!!");
     }
 
     new_token(TK_EOF, current, p);

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include "lib/print.h"
 #include "lib/token.h"
 
@@ -18,7 +17,8 @@ int main(int argc, char **argv) {
         error("引数の個数が正しくありません");
     }
 
-    token = tokenize(argv[1]);
+    USER_INPUT = argv[1];
+    token = tokenize(USER_INPUT);
 
     print_prefix();
     print_first_term(get_number());
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
             continue;
         }
 
-        error("Unexpected token: %c", token->str);
+        error_at(token->str, "Unexpected token: %c", token->str);
     }
 
     print_return();
@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
 }
 
 int get_number() {
-    if (token->kind != TK_NUMBER) error("Not a number!!");
+    if (token->kind != TK_NUMBER) error_at(token->str, "Not a number!!");
 
     int val = token->val;
     token = token->next;
