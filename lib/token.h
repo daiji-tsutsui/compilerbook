@@ -21,15 +21,15 @@ struct Token {
     char *str;
 };
 
-Token *new_token(TokenKind kind, Token *parent, char *str) {
-    Token *t = calloc(1, sizeof(Token));
+Token* new_token(TokenKind kind, Token* parent, char* str) {
+    Token* t = calloc(1, sizeof(Token));
     t->kind = kind;
     t->str = str;
     parent->next = t;
     return t;
 }
 
-Token tokenize(char *p) {
+Token* tokenize(char *p) {
     Token head;
     head.next = NULL;
     Token* current = &head;
@@ -57,7 +57,7 @@ Token tokenize(char *p) {
     }
 
     new_token(TK_EOF, current, p);
-    return *head.next;
+    return head.next;
 }
 
 bool is_operator(char c) {

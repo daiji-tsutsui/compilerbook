@@ -6,66 +6,68 @@
 
 bool DEBUG = false;
 
-int get_number(Token* token);
-bool consume(Token* token, char op);
-bool at_eof(Token token);
-void print_debug(Token token);
+int get_number();
+bool consume(char op);
+bool at_eof();
+void print_debug();
+
+Token* token; // token stream
 
 int main(int argc, char **argv) {
     if (argc != 2) {
         error("引数の個数が正しくありません");
     }
 
-    Token token = tokenize(argv[1]);
+    token = tokenize(argv[1]);
 
     print_prefix();
-    print_first_term(get_number(&token));
+    print_first_term(get_number());
 
-    while (!at_eof(token)) {
+    while (!at_eof()) {
         if (DEBUG) {
-            print_debug(token);
-            token = *token.next;
+            print_debug();
+            token = token->next;
             continue;
         }
 
-        if (consume(&token, '+')) {
-            print_add_term(get_number(&token));
+        if (consume('+')) {
+            print_add_term(get_number());
             continue;
         }
 
-        if (consume(&token, '-')) {
-            print_sub_term(get_number(&token));
+        if (consume('-')) {
+            print_sub_term(get_number());
             continue;
         }
 
-        error("Unexpected token: %c", token.str);
+        error("Unexpected token: %c", token->str);
     }
 
     print_return();
     return 0;
 }
 
-int get_number(Token* token) {
+int get_number() {
     if (token->kind != TK_NUMBER) error("Not a number!!");
 
     int val = token->val;
-    *token = *token->next;
+    token = token->next;
     return val;
 }
 
-bool consume(Token* token, char op) {
+bool consume(char op) {
     if (token->kind != TK_OPERATOR || *token->str != op) return false;
 
-    *token = *token->next;
+    token = token->next;
     return true;
 }
 
-bool at_eof(Token token) {
-    return (token.kind == TK_EOF);
+bool at_eof() {
+    return (token->kind == TK_EOF);
 }
 
-void print_debug(Token token) {
-    printf("kind: %d\n", token.kind);
-    printf("  str: %c\n", *token.str);
-    printf("  val: %d\n", token.val);
+void print_debug() {
+    printf("kind: %d\n", token->kind);
+    printf("  str: %c\n", *token->str);
+    printf("  val: %d\n", token->val);
 }
