@@ -4,6 +4,10 @@
 
 char* USER_INPUT = NULL;
 
+void setup_error_logger(char* src) {
+    USER_INPUT = src;
+}
+
 void error(char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);

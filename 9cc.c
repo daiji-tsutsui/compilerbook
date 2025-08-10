@@ -17,8 +17,10 @@ int main(int argc, char **argv) {
         error("引数の個数が正しくありません");
     }
 
-    USER_INPUT = argv[1];
-    token = tokenize(USER_INPUT);
+    char* input = argv[1];
+    setup_error_logger(input);
+
+    token = tokenize(input);
 
     print_prefix();
     print_first_term(get_number());
