@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "./token.h"
 
-bool DEBUG = true;
+bool DEBUG = false;
 Token* TOKEN; // token stream
 
 typedef enum {
@@ -52,6 +52,7 @@ Node* new_node_num(int val) {
 
 Node* expr() {
     if (DEBUG) printf("expr ->\n");
+
     Node* node = mul();
 
     while(true) {
@@ -69,6 +70,7 @@ Node* expr() {
 
 Node* mul() {
     if (DEBUG) printf("mul ->\n");
+
     Node* node = primary();
 
     while(true) {
@@ -86,6 +88,7 @@ Node* mul() {
 
 Node* primary() {
     if (DEBUG) printf("primary ->\n");
+
     if (consume('(')) {
         Node* node = expr();
         if (consume(')')) return node;
@@ -106,6 +109,7 @@ bool consume(char op) {
 
 int get_number() {
     if (DEBUG) print_debug();
+
     if (TOKEN->kind != TK_NUMBER) error_at(TOKEN->str, "Not a number!!");
 
     int val = TOKEN->val;
