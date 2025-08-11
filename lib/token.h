@@ -63,6 +63,10 @@ Token* tokenize(char* p) {
 bool is_operator(char c) {
     if (c == '+') return true;
     if (c == '-') return true;
+    if (c == '*') return true;
+    if (c == '/') return true;
+    if (c == '(') return true;
+    if (c == ')') return true;
 
     return false;
 }
